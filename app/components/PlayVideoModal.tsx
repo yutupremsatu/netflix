@@ -70,7 +70,7 @@ export default function PlayVideoModal({
               className={isExpanded ? "w-full h-full flex-grow" : "w-full h-[400px]"}
               allowFullScreen
               allow="autoplay; encrypted-media"
-              sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts"
+              sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-popups allow-modals"
             ></iframe>
           ) : (
             <video src={videoSource} controls className="w-full" autoPlay />

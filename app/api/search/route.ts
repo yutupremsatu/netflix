@@ -12,8 +12,8 @@ export async function GET(request: Request) {
     const movies = await prisma.movie.findMany({
         where: {
             OR: [
-                { title: { contains: query } },
-                { overview: { contains: query } },
+                { title: { contains: query, mode: "insensitive" as any } },
+                { overview: { contains: query, mode: "insensitive" as any } },
             ],
         },
         select: {
