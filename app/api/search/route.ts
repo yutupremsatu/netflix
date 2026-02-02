@@ -30,5 +30,9 @@ export async function GET(request: Request) {
         take: 20,
     });
 
-    return NextResponse.json(movies);
+    return NextResponse.json(movies, {
+        headers: {
+            "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=59",
+        },
+    });
 }
