@@ -31,7 +31,7 @@ export default function PlayVideoModal({
 }: iAppProps) {
   return (
     <Dialog open={state} onOpenChange={() => changeState(!state)}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[800px]">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription className="line-clamp-3">
@@ -44,7 +44,16 @@ export default function PlayVideoModal({
           </div>
         </DialogHeader>
         {videoSource ? (
-          <video src={videoSource} controls className="w-full" autoPlay />
+          videoSource.includes("vidsrc") || videoSource.includes("embed") ? (
+            <iframe
+              src={videoSource}
+              className="w-full h-[400px]"
+              allowFullScreen
+              allow="autoplay; encrypted-media"
+            ></iframe>
+          ) : (
+            <video src={videoSource} controls className="w-full" autoPlay />
+          )
         ) : (
           <iframe src={youtubeUrl} height={250} className="w-full"></iframe>
         )}
