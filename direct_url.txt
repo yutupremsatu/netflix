@@ -1,0 +1,1 @@
+postgresql://postgres.riesqqctsavzpprucbal:%23uTzRMmmnED83Nc@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true
