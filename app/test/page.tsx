@@ -2,6 +2,7 @@
 import prisma from "../utils/db";
 
 export const dynamic = 'force-dynamic';
+const VERSION = "1.0.5 - DIRECT CONNECTION ATTEMPT";
 
 export default async function TestPage() {
     const dbUrl = process.env.DATABASE_URL || "NOT_SET";
@@ -14,7 +15,7 @@ export default async function TestPage() {
 
         return (
             <div>
-                <h1>VERIFICATION PAGE</h1>
+                <h1>VERIFICATION PAGE (v{VERSION})</h1>
                 <p>Status: SUCCESS (Connected to DB)</p>
                 <p>DATABASE_URL: {maskedUrl}</p>
                 <p>Tables found: {tableNames.join(", ") || "NONE"}</p>
@@ -26,7 +27,7 @@ export default async function TestPage() {
     } catch (error: any) {
         return (
             <div>
-                <h1>VERIFICATION PAGE - ERROR</h1>
+                <h1>VERIFICATION PAGE (v{VERSION}) - ERROR</h1>
                 <p>Status: FAILED</p>
                 <p>DATABASE_URL: {maskedUrl}</p>
                 <pre>{JSON.stringify(error, Object.getOwnPropertyNames(error), 2)}</pre>
