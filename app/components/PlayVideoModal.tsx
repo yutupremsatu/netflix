@@ -15,6 +15,7 @@ interface iAppProps {
   release: number;
   age: number;
   duration: number;
+  videoSource: string;
 }
 
 export default function PlayVideoModal({
@@ -26,6 +27,7 @@ export default function PlayVideoModal({
   age,
   duration,
   release,
+  videoSource,
 }: iAppProps) {
   return (
     <Dialog open={state} onOpenChange={() => changeState(!state)}>
@@ -41,7 +43,11 @@ export default function PlayVideoModal({
             <p>{duration}h</p>
           </div>
         </DialogHeader>
-        <iframe src={youtubeUrl} height={250} className="w-full"></iframe>
+        {videoSource ? (
+          <video src={videoSource} controls className="w-full" autoPlay />
+        ) : (
+          <iframe src={youtubeUrl} height={250} className="w-full"></iframe>
+        )}
       </DialogContent>
     </Dialog>
   );
