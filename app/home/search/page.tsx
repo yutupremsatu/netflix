@@ -29,31 +29,38 @@ function SearchContent() {
             <div className="mb-10">
                 <form onSubmit={(e) => {
                     e.preventDefault();
-                    // Let the form submission update the URL via navigation or state if needed, 
-                    // but query is monitored by useEffect.
-                    // Actually, simpler to just push to router.
-                }} className="relative max-w-2xl mx-auto">
-                    <input
-                        type="text"
-                        defaultValue={query}
-                        onChange={(e) => {
-                            // Optional: Debounce or just wait for Enter
-                        }}
-                        placeholder="Search for movies, TV shows..."
-                        className="w-full bg-gray-900 border border-gray-700 text-white px-5 py-4 rounded-full text-lg focus:outline-none focus:border-red-600 transition shadow-lg"
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                                const val = (e.target as HTMLInputElement).value;
-                                if (val.trim()) {
-                                    window.location.href = `/home/search?q=${encodeURIComponent(val)}`;
-                                }
-                            }
-                        }}
-                    />
-                    <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                }} className="relative max-w-2xl mx-auto flex gap-4">
+                    {/* Home Button */}
+                    <a href="/home" className="flex items-center justify-center w-14 h-14 bg-gray-800 rounded-full hover:bg-red-600 transition text-white border border-gray-600 hover:border-red-600 shadow-lg" title="Back to Home">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
                         </svg>
+                    </a>
+
+                    <div className="relative w-full">
+                        <input
+                            type="text"
+                            defaultValue={query}
+                            onChange={(e) => {
+                                // Optional: Debounce or just wait for Enter
+                            }}
+                            placeholder="Search for movies, TV shows..."
+                            className="w-full bg-gray-900 border border-gray-700 text-white px-5 py-4 rounded-full text-lg focus:outline-none focus:border-red-600 transition shadow-lg"
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    const val = (e.target as HTMLInputElement).value;
+                                    if (val.trim()) {
+                                        window.location.href = `/home/search?q=${encodeURIComponent(val)}`;
+                                    }
+                                }
+                            }}
+                        />
+                        <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
                     </div>
                 </form>
             </div>
