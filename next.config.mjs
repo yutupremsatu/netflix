@@ -31,6 +31,16 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: "ia.media-imdb.com",
                 port: "",
+            },
+            {
+                protocol: 'https',
+                hostname: "yts.bz",
+                port: "",
+            },
+            {
+                protocol: 'https',
+                hostname: "yts.mx",
+                port: "",
             }
         ]
     }
