@@ -41,7 +41,9 @@ export default function SearchBar({
     return (
         <form onSubmit={handleSubmit} className="relative z-50">
             <div
-                className={`flex items-center transition-all duration-300 ease-in-out bg-black/80 border border-white/20 rounded-md ${isExpanded ? "w-64 sm:w-80 px-2" : "w-10 h-10 justify-center cursor-pointer hover:bg-white/10"
+                className={`flex items-center transition-all duration-300 ease-in-out border border-white/80 rounded-md ${isExpanded
+                    ? "w-64 sm:w-80 px-2 bg-black/90"
+                    : "w-10 h-10 justify-center cursor-pointer bg-red-600 hover:bg-red-700"
                     }`}
             >
                 {/* Search Icon / Toggle Button */}
