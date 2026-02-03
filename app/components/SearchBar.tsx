@@ -1,7 +1,7 @@
 "use client";
 
 import { Search, X } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 interface SearchBarProps {
@@ -11,68 +11,68 @@ interface SearchBarProps {
 
 export default function SearchBar({
     onSearch,
-    placeholder = "Search movies, shows...",
+    placeholder = "Search titles...",
 }: SearchBarProps) {
     const [query, setQuery] = useState("");
     const [isExpanded, setIsExpanded] = useState(false);
+    const inputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
 
     useEffect(() => {
-        const debounce = setTimeout(() => {
-            if (onSearch) {
-                onSearch(query);
-            }
-        }, 300);
-
-        return () => clearTimeout(debounce);
-    }, [query, onSearch]);
+        if (isExpanded && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [isExpanded]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (query.trim()) {
             router.push(`/home/search?q=${encodeURIComponent(query.trim())}`);
+            setIsExpanded(false); // Optional: collapse after search?
         }
     };
 
     const handleClear = () => {
         setQuery("");
         if (onSearch) onSearch("");
+        setIsExpanded(false);
     };
 
     return (
-        <form onSubmit={handleSubmit} className="relative">
+        <form onSubmit={handleSubmit} className="relative z-50">
             <div
-                className={`flex items-center bg-black/60 border border-gray-700 rounded-full transition-all duration-300 ${isExpanded ? "w-64 md:w-80" : "w-10"
+                className={`flex items-center transition-all duration-300 ease-in-out bg-black/80 border border-white/20 rounded-md ${isExpanded ? "w-64 sm:w-80 px-2" : "w-10 h-10 justify-center cursor-pointer hover:bg-white/10"
                     }`}
             >
+                {/* Search Icon / Toggle Button */}
                 <button
                     type="button"
                     onClick={() => setIsExpanded(!isExpanded)}
-                    className="p-2.5 text-gray-400 hover:text-white transition-colors"
+                    className="text-white flex items-center justify-center min-w-[24px]"
                 >
                     <Search className="w-5 h-5" />
                 </button>
 
+                {/* Input Field (Hidden until expanded) */}
+                <input
+                    ref={inputRef}
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder={placeholder}
+                    className={`bg-transparent text-white text-sm placeholder-gray-400 outline-none ml-2 w-full transition-opacity duration-200 ${isExpanded ? "opacity-100 block" : "opacity-0 hidden w-0"
+                        }`}
+                />
+
+                {/* Clear / Close Button */}
                 {isExpanded && (
-                    <>
-                        <input
-                            type="text"
-                            value={query}
-                            onChange={(e) => setQuery(e.target.value)}
-                            placeholder={placeholder}
-                            className="flex-1 bg-transparent text-white text-sm placeholder-gray-500 outline-none pr-2"
-                            autoFocus
-                        />
-                        {query && (
-                            <button
-                                type="button"
-                                onClick={handleClear}
-                                className="p-2 text-gray-400 hover:text-white transition-colors"
-                            >
-                                <X className="w-4 h-4" />
-                            </button>
-                        )}
-                    </>
+                    <button
+                        type="button"
+                        onClick={handleClear}
+                        className="text-gray-400 hover:text-white ml-1"
+                    >
+                        <X className="w-4 h-4" />
+                    </button>
                 )}
             </div>
         </form>
