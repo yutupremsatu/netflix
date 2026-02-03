@@ -86,13 +86,21 @@ export default async function RecentlyAdded({ page = 1 }: { page?: number }) {
         ))}
       </div>
 
-      {/* Pagination Controls */}
       <div className="flex justify-center items-center gap-4 mt-8 mb-10">
         {page > 1 && (
           <a href={`/home/page/${page - 1}`} className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition">
             Previous
           </a>
         )}
+
+        {/* Helper Search Button */}
+        <a href="/home/search" className="p-2 bg-gray-800 text-gray-200 rounded-full hover:bg-white hover:text-black transition border border-gray-600" title="Search Database">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </a>
+
         <span className="text-white font-semibold">
           Page {page} of {totalPages}
         </span>
