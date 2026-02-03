@@ -1,52 +1,25 @@
 
-# Netekflix by yutupremsatu
+# Netekflix
 
-Welcome to the Netekflix Project by yutupremsatu. This project is a clone of the popular streaming platform Netflix, created by yutupremsatu. It replicates the core functionality and design of Netflix, allowing users to browse through a collection of movies and TV shows, watch trailers, and enjoy a seamless streaming experience.
+Netekflix is a modern Netflix clone built with Next.js 14, Supabase, and Tailwind CSS.
 
-1. **Clone or Download:**
-   - If using Git, clone the repository using the following command:
-     ```
-     git clone https://github.com/yutupremsatu/netflix.git
-     ```
-   - Alternatively, download the code as a ZIP file and extract it.
-   
-   - Then you need to install the dependencies by
-   ```
-   npm install
-   ```
-   - Mail me at the below mail address to get the env variables.
-   ```
-   yutupremsatu@gmail.com
-   ```
-   - Then to finally run the project using localhost:3000 in your local system
-   ```
-   npm run build
-   npm run dev
-   ```
-    
-You are all good to go.
+## Features
+- **Video Player:** Custom modal player with maximize/minimize support.
+- **Provider:** Uses `vidsrc.xyz` for robust video streaming.
+- **Database:** Supabase (PostgreSQL) stores movie metadata.
+- **Auth:** NextAuth.js (Google/GitHub).
+- **Movies:** 350+ Movies imported from public datasets (YTS, GitHub).
 
+## Tech Stack
+-   **Frontend:** Next.js 14 (App Router), Tailwind CSS
+-   **Backend/DB:** Supabase (PostgreSQL)
+-   **Video Source:** Embed Provider (`vidsrc.xyz`) - Fetches streams by IMDB ID.
+-   **Images:** Hosted on Amazon/IMDB/YTS domains (configured in `next.config.mjs`).
 
+## Getting Started
+1.  Clone repo: `git clone https://github.com/yutupremsatu/netflix.git`
+2.  Install: `npm install`
+3.  Run: `npm run dev`
 
-2. **Explore the Structure:**
-Take a moment to review the project structure:
- - It is made in a quite detailed manner keeping each component separate for easy readability.
- - Authentication portion, APIs portion, components are separated.
- - The ORM used is Prisma
- - Database used is Supabase
- - Tailwind CSS and ShadCN UI.
-  
- 3. **Open Source Contribution**
-
- - Create a branch, contribute to this project, open pull requests if you feel something needs to be modified.
-
-
- Thank You,
- yutupremsatu.
-
-
-
-
----
-
-
+## Deployment
+Deployed on **Vercel**.
