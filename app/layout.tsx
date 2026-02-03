@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { NextAuthProvider } from "./components/NextAuthProvider";
 import BottomNav from "./components/BottomNav";
-import FloatingSearch from "./components/FloatingSearch";
 
 const inter = Inter({ subsets: ["latin"] });
 
