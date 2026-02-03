@@ -35,10 +35,11 @@ export default function PlayVideoModal({
 }: iAppProps) {
   const [isMaximized, setIsMaximized] = useState(false);
 
-  // VidSrc.to has better subtitle support, though more ads.
-  // We will respect the seed data domain (vidsrc.to) for now to ensure subtitles work.
+  // Reverting to vidsrc.xyz as per user request (fewer ads).
   const getOptimizedSource = (source: string) => {
-    // Return source directly to allow vidsrc.to if seeded
+    if (source.includes("vidsrc.to")) {
+      return source.replace("vidsrc.to", "vidsrc.xyz");
+    }
     return source;
   };
 
