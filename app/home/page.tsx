@@ -7,12 +7,12 @@ const Copyright = () => (
     &copy; yutupremsatu 2024
     <br />
     <a
-      href="https://github.com/yutupremsatu"
+      href="https://github.com/yutupremsatu/netflix"
       className="text-gray-500 hover:text-white"
       target="_blank"
       rel="noopener noreferrer"
     >
-      GitHub
+      yutupremsatu
     </a>
   </div>
 );
