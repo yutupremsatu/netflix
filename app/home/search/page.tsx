@@ -27,7 +27,7 @@ export default function SearchPage() {
     return (
         <div className="max-w-7xl mx-auto px-5 lg:px-8 mt-10">
             <h1 className="text-white text-3xl font-bold mb-8">
-                Search Results for: <span className="text-primary italic">"{query}"</span>
+                Search Results for: <span className="text-primary italic">&quot;{query}&quot;</span>
             </h1>
 
             {loading ? (
