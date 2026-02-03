@@ -35,11 +35,10 @@ export default function PlayVideoModal({
 }: iAppProps) {
   const [isMaximized, setIsMaximized] = useState(false);
 
-  // Convert vidsrc.to to vidsrc.xyz for fewer ads
+  // VidSrc.to has better subtitle support, though more ads.
+  // We will respect the seed data domain (vidsrc.to) for now to ensure subtitles work.
   const getOptimizedSource = (source: string) => {
-    if (source.includes("vidsrc.to")) {
-      return source.replace("vidsrc.to", "vidsrc.xyz");
-    }
+    // Return source directly to allow vidsrc.to if seeded
     return source;
   };
 
@@ -49,7 +48,7 @@ export default function PlayVideoModal({
     <Dialog open={state} onOpenChange={() => changeState(!state)}>
       <DialogContent
         className={`${isMaximized
-          ? "fixed inset-0 w-screen h-screen max-w-none max-h-none rounded-none"
+          ? "!fixed !inset-0 !w-screen !h-screen !max-w-none !max-h-none !rounded-none !border-none !translate-x-0 !translate-y-0 !top-0 !left-0 z-50 transform-none"
           : "sm:max-w-[900px]"
           } bg-black/95 border-gray-800 transition-all duration-300`}
       >
