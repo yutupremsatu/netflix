@@ -21,6 +21,16 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: "images.unsplash.com",
                 port: "",
+            },
+            {
+                protocol: 'http',
+                hostname: "ia.media-imdb.com",
+                port: "",
+            },
+            {
+                protocol: 'https',
+                hostname: "ia.media-imdb.com",
+                port: "",
             }
         ]
     }
