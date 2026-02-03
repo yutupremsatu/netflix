@@ -22,7 +22,6 @@ export default function RootLayout({
       <body className={inter.className}>
         <NextAuthProvider>
           {children}
-          <FloatingSearch />
           <BottomNav />
         </NextAuthProvider>
       </body>
