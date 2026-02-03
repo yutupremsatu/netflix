@@ -1,11 +1,12 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+// Using Card from MovieCard component below
 import { MovieCard as Card } from "@/app/components/MovieCard";
 
-function SearchContent() {
+export default function SearchPage() {
     const searchParams = useSearchParams();
     const query = searchParams.get("q");
     const [results, setResults] = useState<any[]>([]);
@@ -26,7 +27,7 @@ function SearchContent() {
     return (
         <div className="max-w-7xl mx-auto px-5 lg:px-8 mt-10">
             <h1 className="text-white text-3xl font-bold mb-8">
-                Search Results for: <span className="text-primary italic">&quot;{query}&quot;</span>
+                Search Results for: <span className="text-primary italic">"{query}"</span>
             </h1>
 
             {loading ? (
@@ -74,13 +75,5 @@ function SearchContent() {
                 <div className="text-gray-400 text-center py-20">No results found.</div>
             )}
         </div>
-    );
-}
-
-export default function SearchPage() {
-    return (
-        <Suspense fallback={<div className="text-white text-center mt-20">Loading Search...</div>}>
-            <SearchContent />
-        </Suspense>
     );
 }

@@ -1,38 +1,41 @@
 "use client";
 
+import { Home, Search, Grid3X3, Heart } from "lucide-react";
 import Link from "next/link";
-import { Home, Search, List, Clock } from "lucide-react";
 import { usePathname } from "next/navigation";
 
-export default function BottomNav() {
-    const pathName = usePathname();
+const navItems = [
+    { icon: Home, label: "Home", href: "/home" },
+    { icon: Search, label: "Search", href: "/home/search" },
+    { icon: Grid3X3, label: "Categories", href: "/home/movies" },
+    { icon: Heart, label: "My List", href: "/home/user/list" },
+];
 
-    const navItems = [
-        { icon: Home, label: "Home", href: "/home" },
-        { icon: List, label: "My List", href: "/home/user/list" },
-        { icon: Clock, label: "Recent", href: "/home/recently" },
-        // Search is handled in Navbar, but maybe a quick toggle here too?
-        // Let's stick to Home, List, Recent for now as the core actions.
-    ];
+export default function BottomNav() {
+    const pathname = usePathname();
 
     return (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 lg:hidden">
-            <div className="bg-black/80 backdrop-blur-md border border-gray-800 rounded-full px-6 py-3 flex gap-x-8 shadow-2xl">
-                {navItems.map((item, idx) => {
-                    const Icon = item.icon;
-                    const isActive = pathName === item.href;
+        <nav className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/95 to-transparent pb-safe z-30 md:hidden">
+            <div className="flex items-center justify-around py-2 px-4">
+                {navItems.map((item) => {
+                    const isActive = pathname === item.href ||
+                        (item.href !== "/home" && pathname.startsWith(item.href));
+
                     return (
-                        <Link key={idx} href={item.href} className="flex flex-col items-center gap-y-1 group">
-                            <Icon
-                                className={`h-6 w-6 transition-colors ${isActive ? "text-primary fill-primary" : "text-gray-400 group-hover:text-white"}`}
-                            />
-                            <span className={`text-[10px] ${isActive ? "text-primary font-bold" : "text-gray-500 overflow-hidden h-0 group-hover:h-auto"}`}>
-                                {item.label}
-                            </span>
+                        <Link
+                            key={item.href}
+                            href={item.href}
+                            className={`flex flex-col items-center gap-1 px-4 py-2 rounded-lg transition-colors ${isActive
+                                    ? "text-red-500"
+                                    : "text-gray-400 hover:text-white"
+                                }`}
+                        >
+                            <item.icon className={`w-6 h-6 ${isActive ? "scale-110" : ""} transition-transform`} />
+                            <span className="text-xs font-medium">{item.label}</span>
                         </Link>
                     );
                 })}
             </div>
-        </div>
+        </nav>
     );
 }

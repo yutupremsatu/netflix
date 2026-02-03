@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -5,9 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { MaximizeIcon, MinimizeIcon } from "lucide-react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Maximize2, Minimize2, X } from "lucide-react";
 
 interface iAppProps {
   title: string;
@@ -32,88 +33,83 @@ export default function PlayVideoModal({
   release,
   videoSource,
 }: iAppProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [activeServer, setActiveServer] = useState(0); // 0: XYZ, 1: TO, 2: LIB
+  const [isMaximized, setIsMaximized] = useState(false);
 
-  // Extract ID from videoSource (e.g., https://vidsrc.to/embed/movie/980489)
-  const extractId = (url: string) => {
-    if (!url) return null;
-    const match = url.match(/\/(movie|tv)\/(\d+)/);
-    if (match) return { type: match[1], id: match[2] };
-    return null;
+  // Convert vidsrc.to to vidsrc.xyz for fewer ads
+  const getOptimizedSource = (source: string) => {
+    if (source.includes("vidsrc.to")) {
+      return source.replace("vidsrc.to", "vidsrc.xyz");
+    }
+    return source;
   };
 
-  const mediaInfo = extractId(videoSource);
-  const servers = [
-    { name: "Server 1", getUrl: (type: string, id: string) => `https://vidsrc.xyz/embed/${type}/${id}` },
-    { name: "Server 2", getUrl: (type: string, id: string) => `https://vidsrc.to/embed/${type}/${id}` },
-    { name: "Server 3", getUrl: (type: string, id: string) => `https://vidsrc.lib/embed/${type}/${id}` },
-  ];
-
-  const currentVideoUrl = mediaInfo
-    ? servers[activeServer].getUrl(mediaInfo.type, mediaInfo.id)
-    : videoSource;
+  const optimizedSource = videoSource ? getOptimizedSource(videoSource) : "";
 
   return (
-    <Dialog open={state} onOpenChange={() => {
-      setIsExpanded(false);
-      changeState(!state);
-    }}>
-      <DialogContent className={isExpanded ? "max-w-[100vw] h-[100vh] w-screen p-0 m-0 rounded-none bg-black border-none overflow-hidden flex flex-col" : "sm:max-w-[800px] bg-zinc-900 border-zinc-800 text-white"}>
-        <DialogHeader className={isExpanded ? "p-4 bg-black/50 absolute top-0 left-0 w-full z-20 transition-opacity opacity-0 hover:opacity-100" : "p-6"}>
-          <div className="flex justify-between items-start w-full">
-            <div className="flex-grow pr-4">
-              <DialogTitle className="text-xl font-bold">{title}</DialogTitle>
-              <DialogDescription className="line-clamp-2 text-zinc-400 mt-1">
+    <Dialog open={state} onOpenChange={() => changeState(!state)}>
+      <DialogContent
+        className={`${isMaximized
+            ? "fixed inset-0 w-screen h-screen max-w-none max-h-none rounded-none"
+            : "sm:max-w-[900px]"
+          } bg-black/95 border-gray-800 transition-all duration-300`}
+      >
+        <DialogHeader className="relative">
+          <div className="flex items-center justify-between">
+            <DialogTitle className="text-white text-xl">{title}</DialogTitle>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setIsMaximized(!isMaximized)}
+                className="p-2 hover:bg-white/10 rounded-full transition-colors"
+                title={isMaximized ? "Minimize" : "Maximize"}
+              >
+                {isMaximized ? (
+                  <Minimize2 className="w-5 h-5 text-white" />
+                ) : (
+                  <Maximize2 className="w-5 h-5 text-white" />
+                )}
+              </button>
+            </div>
+          </div>
+          {!isMaximized && (
+            <>
+              <DialogDescription className="line-clamp-2 text-gray-400">
                 {overview}
               </DialogDescription>
-              <div className="flex gap-x-3 items-center mt-2 text-xs text-zinc-400">
-                <p>{release}</p>
-                <p className="border py-0.5 px-1 bg-zinc-800 border-zinc-700 rounded">{age}+</p>
-                <p>{duration > 0 ? `${duration}h` : "TV Series"}</p>
+              <div className="flex gap-x-3 items-center text-sm text-gray-300">
+                <span>{release}</span>
+                <span className="border py-0.5 px-2 border-gray-600 rounded text-xs">
+                  {age}+
+                </span>
+                <span>{duration}h</span>
               </div>
-            </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsExpanded(!isExpanded)}
-              className="hover:bg-white/10"
-            >
-              {isExpanded ? <MinimizeIcon className="h-5 w-5" /> : <MaximizeIcon className="h-5 w-5" />}
-            </Button>
-          </div>
+            </>
+          )}
         </DialogHeader>
 
-        {mediaInfo && (
-          <div className="flex px-6 pb-2 gap-x-2 overflow-x-auto no-scrollbar border-b border-zinc-800">
-            {servers.map((server, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveServer(idx)}
-                className={`px-3 py-1 text-[10px] rounded-full border transition whitespace-nowrap ${activeServer === idx
-                    ? "bg-white text-black border-white"
-                    : "bg-zinc-800 text-zinc-400 border-zinc-700 hover:text-white"
-                  }`}
-              >
-                {server.name}
-              </button>
-            ))}
-            <span className="text-[10px] text-zinc-500 py-1 italic ml-auto hidden sm:block">Switch if player fails</span>
-          </div>
-        )}
-
-        <div className={isExpanded ? "flex-grow bg-black relative" : "relative w-full h-[450px] bg-black rounded-b-lg overflow-hidden"}>
-          {videoSource ? (
-            <iframe
-              src={currentVideoUrl}
-              className="w-full h-full"
-              allowFullScreen
-              allow="autoplay; encrypted-media; fullscreen"
-              // Removed strict sandbox to ensure cross-origin player scripts can load
-              sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation allow-popups"
-            ></iframe>
+        <div className={`${isMaximized ? "h-[calc(100vh-80px)]" : "h-[500px]"} w-full`}>
+          {optimizedSource ? (
+            optimizedSource.includes("vidsrc") || optimizedSource.includes("embed") ? (
+              <iframe
+                src={optimizedSource}
+                className="w-full h-full rounded-lg"
+                allowFullScreen
+                allow="autoplay; encrypted-media; fullscreen"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+              ></iframe>
+            ) : (
+              <video
+                src={optimizedSource}
+                controls
+                className="w-full h-full rounded-lg"
+                autoPlay
+              />
+            )
           ) : (
-            <iframe src={youtubeUrl} className="w-full h-full" allowFullScreen></iframe>
+            <iframe
+              src={youtubeUrl}
+              className="w-full h-full rounded-lg"
+              allowFullScreen
+            ></iframe>
           )}
         </div>
       </DialogContent>

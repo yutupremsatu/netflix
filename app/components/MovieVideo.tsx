@@ -24,25 +24,15 @@ export default async function MovieVideo() {
 
   return (
     <div className="h-[55vh] lg:h-[60vh] w-full flex justify-start items-center">
-      {data?.videoSource && !data.videoSource.includes("vidsrc") && !data.videoSource.includes("embed") ? (
-        <video
-          poster={data?.imageString}
-          autoPlay
-          muted
-          loop
-          src={data?.videoSource}
-          className="w-full absolute top-0 left-0 h-[60vh] object-cover -z-10 brightness-[60%]"
-        ></video>
-      ) : (
-        <div className="w-full absolute top-0 left-0 h-[60vh] -z-10 brightness-[60%]">
-          <img
-            src={data?.imageString}
-            alt="Background"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-        </div>
-      )}
+      <video
+        poster={data?.imageString}
+        autoPlay
+        muted
+        loop
+        src={data?.videoSource}
+        className="w-full absolute top-0 left-0 h-[60vh] object-cover -z-10 brightness-[60%]"
+      ></video>
+
       <div className="absolute w-[90%] lg:w-[40%] mx-auto">
         <h1 className="text-white text-4xl md:text-5xl lg:text-6xl font-bold">
           {data?.title}
