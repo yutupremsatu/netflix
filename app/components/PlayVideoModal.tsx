@@ -49,8 +49,8 @@ export default function PlayVideoModal({
     <Dialog open={state} onOpenChange={() => changeState(!state)}>
       <DialogContent
         className={`${isMaximized
-            ? "fixed inset-0 w-screen h-screen max-w-none max-h-none rounded-none"
-            : "sm:max-w-[900px]"
+          ? "fixed inset-0 w-screen h-screen max-w-none max-h-none rounded-none"
+          : "sm:max-w-[900px]"
           } bg-black/95 border-gray-800 transition-all duration-300`}
       >
         <DialogHeader className="relative">
@@ -94,7 +94,6 @@ export default function PlayVideoModal({
                 className="w-full h-full rounded-lg"
                 allowFullScreen
                 allow="autoplay; encrypted-media; fullscreen"
-                sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
               ></iframe>
             ) : (
               <video
