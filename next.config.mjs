@@ -41,6 +41,16 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: "yts.mx",
                 port: "",
+            },
+            {
+                protocol: 'https',
+                hostname: "img.yts.mx",
+                port: "",
+            },
+            {
+                protocol: 'https',
+                hostname: "yts.lt",
+                port: "",
             }
         ]
     }

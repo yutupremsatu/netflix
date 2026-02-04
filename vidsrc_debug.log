@@ -1,0 +1,13 @@
+START DEBUG
+Checking VALID (tt0848228)...
+[VALID] Status: 200
+[VALID] Length: 58833
+[VALID] Title: The Avengers (2012)
+[VALID] Body has '404': false
+-------------------------------------------------
+Checking INVALID (tt999999999999)...
+[INVALID] Status: 404
+[INVALID] Length: 1140
+[INVALID] Title: 404 Not Found
+[INVALID] Body has '404': true
+-------------------------------------------------
